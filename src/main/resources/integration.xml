@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-http="http://www.springframework.org/schema/integration/http"
+	xmlns:file="http://www.springframework.org/schema/integration/file"
+	xmlns:int-mqtt="http://www.springframework.org/schema/integration/mqtt"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/mqtt http://www.springframework.org/schema/integration/mqtt/spring-integration-mqtt.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file.xsd
+		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http-2.2.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+
+
+	<int:channel id="output"></int:channel>
+	<bean id="clientFactory"
+		class="org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory">
+		<property name="userName" value="guest" />
+		<property name="password" value="guest" />
+	</bean>
+ 
+	<int-mqtt:message-driven-channel-adapter
+		id="mqttInbound" client-id="xd.mqtt.client.id.src" url="tcp://localhost:1883" topics="xd.mqtt.test" send-timeout="123"
+		client-factory="clientFactory" channel="output" />
+		
+		
+</beans>
